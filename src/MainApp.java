@@ -4,8 +4,10 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class MainApp extends JDialog
+public class MainApp extends JDialog implements ActionListener
 {
     public static void main(String[] args)
     {
@@ -15,7 +17,16 @@ public class MainApp extends JDialog
     public MainApp()
     {
         JPanel cp = new JPanel(new BorderLayout());
+        var mb = new JMenuBar();
+        var x = new JMenu("File");
 
+        var m1 = new JMenuItem("Open directory");
+        var m3 = new JMenuItem("Exit");
+        m3.addActionListener(this);
+        x.add(m1);
+        x.add(m3);
+        mb.add(x);
+        setJMenuBar(mb);
         RSyntaxTextArea textArea = new RSyntaxTextArea(20, 60);
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         textArea.setCodeFoldingEnabled(true);
@@ -31,4 +42,17 @@ public class MainApp extends JDialog
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if("Exit".equals(e.getActionCommand())){
+
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            JOptionPane.showConfirmDialog (null, "Would You Like to Save your Previous Note First?","Warning",dialogButton);
+
+            if(dialogButton == JOptionPane.YES_OPTION){
+                System.exit(0);
+            }
+
+        }
+    }
 }
