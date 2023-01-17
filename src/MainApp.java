@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class MainApp extends JDialog implements ActionListener
 {
@@ -13,7 +14,7 @@ public class MainApp extends JDialog implements ActionListener
     {
         SwingUtilities.invokeLater(() -> new MainApp().setVisible(true));
     }
-
+    private String directory;
     public MainApp()
     {
         JPanel cp = new JPanel(new BorderLayout());
@@ -22,6 +23,7 @@ public class MainApp extends JDialog implements ActionListener
 
         var m1 = new JMenuItem("Open directory");
         var m3 = new JMenuItem("Exit");
+        m1.addActionListener(this);
         m3.addActionListener(this);
         x.add(m1);
         x.add(m3);
@@ -52,7 +54,17 @@ public class MainApp extends JDialog implements ActionListener
             if(dialogButton == JOptionPane.YES_OPTION){
                 System.exit(0);
             }
-
         }
+        if("Open directory".equals(e.getActionCommand())){
+
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int option = fileChooser.showOpenDialog(this);
+            if(option == JFileChooser.APPROVE_OPTION){
+                File file = fileChooser.getSelectedFile();
+                directory = file.getName();
+            }
+        }
+
     }
 }
