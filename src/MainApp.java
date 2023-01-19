@@ -56,7 +56,6 @@ public class MainApp extends JDialog implements ActionListener
             }
         }
         if("Open directory".equals(e.getActionCommand())){
-
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int option = fileChooser.showOpenDialog(this);
