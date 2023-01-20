@@ -33,7 +33,8 @@ public class MainApp extends JDialog implements ActionListener
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         textArea.setCodeFoldingEnabled(true);
         RTextScrollPane sp = new RTextScrollPane(textArea);
-        cp.add(sp);
+        cp.add(sp, BorderLayout.CENTER);
+        cp.add(new FileTree(new File("/home/denshade/graja")), BorderLayout.WEST);
 
         setContentPane(cp);
         setTitle("Text Editor Demo");
