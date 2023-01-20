@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-public class MainApp extends JDialog implements ActionListener
+public class MainApp extends JFrame implements ActionListener
 {
     public static void main(String[] args)
     {
