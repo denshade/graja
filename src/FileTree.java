@@ -37,8 +37,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
@@ -57,6 +60,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * @author Ian Darwin
  */
 public class FileTree extends JPanel {
+
+    interface FileTreeListener
+    {
+        void fileChanged(File file);
+    }
+
+    private List<FileTreeListener> listeners = new ArrayList<>();
     /** Construct a FileTree */
     public FileTree(File dir) {
         setLayout(new BorderLayout());
@@ -65,18 +75,25 @@ public class FileTree extends JPanel {
         JTree tree = new JTree(addNodes(null, dir));
 
         // Add a listener
-        tree.addTreeSelectionListener(new TreeSelectionListener() {
-            public void valueChanged(TreeSelectionEvent e) {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) e
-                        .getPath().getLastPathComponent();
-                System.out.println("You selected " + node);
+        tree.addTreeSelectionListener(e -> {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) e
+                    .getPath().getLastPathComponent();
+            for (FileTreeListener listener : listeners)
+            {
+                listener.fileChanged(new File(node.getUserObject().toString()));
             }
+            System.out.println("You selected " + node);
         });
 
         // Lastly, put the JTree into a JScrollPane.
         JScrollPane scrollpane = new JScrollPane();
         scrollpane.getViewport().add(tree);
         add(BorderLayout.CENTER, scrollpane);
+    }
+
+    public void addListener(FileTreeListener listener)
+    {
+        listeners.add(listener);
     }
 
     /** Add nodes from under "dir" into curTop. Highly recursive. */

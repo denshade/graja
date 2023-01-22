@@ -7,27 +7,35 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Collections;
 
-public class MainApp extends JFrame implements ActionListener
+public class MainApp extends JFrame implements ActionListener, FileTree.FileTreeListener
 {
 
+    private final RSyntaxTextArea javaTextEditor;
     private FileTree fileTree;
     private final JPanel contentPane;
+    private File directory;
+
 
     public static void main(String[] args)
     {
         final JFileChooser fc = new JFileChooser();
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnVal = fc.showOpenDialog(null);
-        var dir = fc.getSelectedFile().toString();
+        var dir = fc.getSelectedFile();
         SwingUtilities.invokeLater(() -> new MainApp(dir).setVisible(true));
     }
-    private File directory;
-    public MainApp(String directory)
+    public MainApp(File directory)
     {
         contentPane = new JPanel(new BorderLayout());
         var mb = new JMenuBar();
         var x = new JMenu("File");
+        this.directory = directory;
 
         var m1 = new JMenuItem("Open directory");
         var m3 = new JMenuItem("Exit");
@@ -37,12 +45,13 @@ public class MainApp extends JFrame implements ActionListener
         x.add(m3);
         mb.add(x);
         setJMenuBar(mb);
-        RSyntaxTextArea textArea = new RSyntaxTextArea(20, 60);
-        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
-        textArea.setCodeFoldingEnabled(true);
-        RTextScrollPane sp = new RTextScrollPane(textArea);
+        javaTextEditor = new RSyntaxTextArea(20, 60);
+        javaTextEditor.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        javaTextEditor.setCodeFoldingEnabled(true);
+        RTextScrollPane sp = new RTextScrollPane(javaTextEditor);
         contentPane.add(sp, BorderLayout.CENTER);
-        fileTree = new FileTree(new File(directory));
+        fileTree = new FileTree(directory);
+        fileTree.addListener(this);
         contentPane.add(fileTree, BorderLayout.WEST);
 
         setContentPane(contentPane);
@@ -85,5 +94,21 @@ public class MainApp extends JFrame implements ActionListener
         if(dialogButton == JOptionPane.YES_OPTION){
             System.exit(0);
         }
+    }
+
+    @Override
+    public void fileChanged(File file) {
+        java.util.List<String> lines = Collections.emptyList();
+        try
+        {
+            lines =
+                    Files.readAllLines(new File(directory + File.separator + file.toString()).toPath(), StandardCharsets.UTF_8);
+        }
+        catch (IOException e)
+        {
+            // do something
+            e.printStackTrace();
+        }
+        javaTextEditor.setText(String.join("\n", lines));
     }
 }
