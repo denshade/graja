@@ -59,7 +59,7 @@ public class MainApp extends JFrame implements ActionListener
         if("Exit".equals(e.getActionCommand())){
 
             int dialogButton = JOptionPane.YES_NO_OPTION;
-            JOptionPane.showConfirmDialog (null, "Would You Like to Save your Previous Note First?","Warning",dialogButton);
+            dialogButton = JOptionPane.showConfirmDialog (null, "Would You Like to Save your Previous Note First?","Warning",dialogButton);
 
             if(dialogButton == JOptionPane.YES_OPTION){
                 System.exit(0);
