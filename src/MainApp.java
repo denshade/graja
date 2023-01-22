@@ -10,6 +10,10 @@ import java.io.File;
 
 public class MainApp extends JFrame implements ActionListener
 {
+
+    private FileTree fileTree;
+    private final JPanel contentPane;
+
     public static void main(String[] args)
     {
         final JFileChooser fc = new JFileChooser();
@@ -18,10 +22,10 @@ public class MainApp extends JFrame implements ActionListener
         var dir = fc.getSelectedFile().toString();
         SwingUtilities.invokeLater(() -> new MainApp(dir).setVisible(true));
     }
-    private String directory;
+    private File directory;
     public MainApp(String directory)
     {
-        JPanel cp = new JPanel(new BorderLayout());
+        contentPane = new JPanel(new BorderLayout());
         var mb = new JMenuBar();
         var x = new JMenu("File");
 
@@ -37,10 +41,11 @@ public class MainApp extends JFrame implements ActionListener
         textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         textArea.setCodeFoldingEnabled(true);
         RTextScrollPane sp = new RTextScrollPane(textArea);
-        cp.add(sp, BorderLayout.CENTER);
-        cp.add(new FileTree(new File(directory)), BorderLayout.WEST);
+        contentPane.add(sp, BorderLayout.CENTER);
+        fileTree = new FileTree(new File(directory));
+        contentPane.add(fileTree, BorderLayout.WEST);
 
-        setContentPane(cp);
+        setContentPane(contentPane);
         setTitle("Text Editor Demo");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
@@ -66,7 +71,11 @@ public class MainApp extends JFrame implements ActionListener
             int option = fileChooser.showOpenDialog(this);
             if(option == JFileChooser.APPROVE_OPTION){
                 File file = fileChooser.getSelectedFile();
-                directory = file.getName();
+                directory = file;
+                contentPane.remove(fileTree);
+                fileTree = new FileTree(directory);
+                contentPane.add(fileTree, BorderLayout.WEST);
+                pack();
             }
         }
 

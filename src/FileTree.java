@@ -88,8 +88,10 @@ public class FileTree extends JPanel {
         }
         Vector ol = new Vector();
         String[] tmp = dir.list();
-        for (int i = 0; i < tmp.length; i++)
-            ol.addElement(tmp[i]);
+        if (tmp != null) {
+            for (int i = 0; i < tmp.length; i++)
+                ol.addElement(tmp[i]);
+        }
         Collections.sort(ol, String.CASE_INSENSITIVE_ORDER);
         File f;
         Vector files = new Vector();
