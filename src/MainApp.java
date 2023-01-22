@@ -53,31 +53,37 @@ public class MainApp extends JFrame implements ActionListener
 
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if("Exit".equals(e.getActionCommand())){
-
-            int dialogButton = JOptionPane.YES_NO_OPTION;
-            dialogButton = JOptionPane.showConfirmDialog (null, "Would You Like to Save your Previous Note First?","Warning",dialogButton);
-
-            if(dialogButton == JOptionPane.YES_OPTION){
-                System.exit(0);
-            }
+            exitAction();
         }
         if("Open directory".equals(e.getActionCommand())){
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int option = fileChooser.showOpenDialog(this);
-            if(option == JFileChooser.APPROVE_OPTION){
-                File file = fileChooser.getSelectedFile();
-                directory = file;
-                contentPane.remove(fileTree);
-                fileTree = new FileTree(directory);
-                contentPane.add(fileTree, BorderLayout.WEST);
-                pack();
-            }
+            openDirectoryAction();
         }
 
+    }
+
+    private void openDirectoryAction() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int option = fileChooser.showOpenDialog(this);
+        if(option == JFileChooser.APPROVE_OPTION){
+            File file = fileChooser.getSelectedFile();
+            directory = file;
+            contentPane.remove(fileTree);
+            fileTree = new FileTree(directory);
+            contentPane.add(fileTree, BorderLayout.WEST);
+            pack();
+        }
+    }
+
+    private void exitAction() {
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        dialogButton = JOptionPane.showConfirmDialog (null, "Would You Like to Save your Previous Note First?","Warning",dialogButton);
+
+        if(dialogButton == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
     }
 }
