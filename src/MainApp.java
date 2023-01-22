@@ -12,10 +12,14 @@ public class MainApp extends JFrame implements ActionListener
 {
     public static void main(String[] args)
     {
-        SwingUtilities.invokeLater(() -> new MainApp().setVisible(true));
+        final JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnVal = fc.showOpenDialog(null);
+        var dir = fc.getSelectedFile().toString();
+        SwingUtilities.invokeLater(() -> new MainApp(dir).setVisible(true));
     }
     private String directory;
-    public MainApp()
+    public MainApp(String directory)
     {
         JPanel cp = new JPanel(new BorderLayout());
         var mb = new JMenuBar();
@@ -34,7 +38,7 @@ public class MainApp extends JFrame implements ActionListener
         textArea.setCodeFoldingEnabled(true);
         RTextScrollPane sp = new RTextScrollPane(textArea);
         cp.add(sp, BorderLayout.CENTER);
-        cp.add(new FileTree(new File("/home/denshade/graja")), BorderLayout.WEST);
+        cp.add(new FileTree(new File(directory)), BorderLayout.WEST);
 
         setContentPane(cp);
         setTitle("Text Editor Demo");
