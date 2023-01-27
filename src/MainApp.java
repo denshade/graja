@@ -1,3 +1,4 @@
+import com.formdev.flatlaf.FlatLightLaf;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -10,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Collections;
 
 public class MainApp extends JFrame implements ActionListener, FileTree.FileTreeListener
@@ -32,6 +32,8 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
     }
     public MainApp(File directory)
     {
+        FlatLightLaf.setup();
+
         contentPane = new JPanel(new BorderLayout());
         var mb = new JMenuBar();
         var x = new JMenu("File");
