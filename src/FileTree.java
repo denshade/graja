@@ -95,7 +95,7 @@ public class FileTree extends JPanel {
                     .getPath().getLastPathComponent();
             for (FileTreeListener listener : listeners)
             {
-                listener.fileChanged(new File(node.getUserObject().toString()));
+                listener.fileChanged(((ShortFile)node.getUserObject()).getFile());
             }
             System.out.println("You selected " + node);
         });
