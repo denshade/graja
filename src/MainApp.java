@@ -24,6 +24,7 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
 
     public static void main(String[] args)
     {
+        FlatLightLaf.setup();
         final JFileChooser fc = new JFileChooser();
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnVal = fc.showOpenDialog(null);
@@ -32,8 +33,6 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
     }
     public MainApp(File directory)
     {
-        FlatLightLaf.setup();
-
         contentPane = new JPanel(new BorderLayout());
         var mb = new JMenuBar();
         var x = new JMenu("File");
