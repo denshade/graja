@@ -39,10 +39,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -64,6 +62,23 @@ public class FileTree extends JPanel {
     interface FileTreeListener
     {
         void fileChanged(File file);
+    }
+    class ShortFile
+    {
+        private final File file;
+
+        ShortFile(File file) {
+            this.file = file;
+        }
+
+        @Override
+        public String toString() {
+            return file.getName();
+        }
+
+        public File getFile() {
+            return file;
+        }
     }
 
     private List<FileTreeListener> listeners = new ArrayList<>();
@@ -99,35 +114,21 @@ public class FileTree extends JPanel {
     /** Add nodes from under "dir" into curTop. Highly recursive. */
     DefaultMutableTreeNode addNodes(DefaultMutableTreeNode curTop, File dir) {
         String curPath = dir.getPath();
-        DefaultMutableTreeNode curDir = new DefaultMutableTreeNode(curPath);
+        DefaultMutableTreeNode curDir = new DefaultMutableTreeNode(new ShortFile(dir));
         if (curTop != null) { // should only be null at root
             curTop.add(curDir);
         }
-        Vector ol = new Vector();
-        String[] tmp = dir.list();
+        File[] tmp = dir.listFiles();
         if (tmp != null) {
-            for (int i = 0; i < tmp.length; i++)
-                ol.addElement(tmp[i]);
+            var dirs = Arrays.stream(tmp).filter(File::isDirectory).collect(Collectors.toList());
+            for (var childDir : dirs) {
+                addNodes(curDir, childDir);
+            }
+            var files = Arrays.stream(tmp).filter(File::isFile).collect(Collectors.toList());
+            for (var currentFile : files) {
+                curDir.add(new DefaultMutableTreeNode(new ShortFile(currentFile)));
+            }
         }
-        Collections.sort(ol, String.CASE_INSENSITIVE_ORDER);
-        File f;
-        Vector files = new Vector();
-        // Make two passes, one for Dirs and one for Files. This is #1.
-        for (int i = 0; i < ol.size(); i++) {
-            String thisObject = (String) ol.elementAt(i);
-            String newPath;
-            if (curPath.equals("."))
-                newPath = thisObject;
-            else
-                newPath = curPath + File.separator + thisObject;
-            if ((f = new File(newPath)).isDirectory())
-                addNodes(curDir, f);
-            else
-                files.addElement(thisObject);
-        }
-        // Pass two: for files.
-        for (int fnum = 0; fnum < files.size(); fnum++)
-            curDir.add(new DefaultMutableTreeNode(files.elementAt(fnum)));
         return curDir;
     }
 

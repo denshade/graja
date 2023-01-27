@@ -99,11 +99,12 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
 
     @Override
     public void fileChanged(File file) {
+        if (!file.isFile()) return;
         java.util.List<String> lines = Collections.emptyList();
         try
         {
             lines =
-                    Files.readAllLines(new File(directory + File.separator + file.toString()).toPath(), StandardCharsets.UTF_8);
+                    Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
         }
         catch (IOException e)
         {
