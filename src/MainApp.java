@@ -62,7 +62,7 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
         contentPane.add(fileTree, BorderLayout.WEST);
 
         setContentPane(contentPane);
-        setTitle("Text Editor Demo");
+        setTitle("Graja");
         setIconImage(ImageIO.read(new File("res/graja.png")));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
