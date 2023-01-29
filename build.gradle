@@ -11,7 +11,11 @@ repositories {
 sourceSets {
     main {
         java.srcDir("src")
+        resources {
+            srcDirs "res"
+        }
     }
+
 }
 
 dependencies {

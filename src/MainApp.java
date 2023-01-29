@@ -3,6 +3,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -29,10 +30,15 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnVal = fc.showOpenDialog(null);
         var dir = fc.getSelectedFile();
-        SwingUtilities.invokeLater(() -> new MainApp(dir).setVisible(true));
+        SwingUtilities.invokeLater(() -> {
+            try {
+                new MainApp(dir).setVisible(true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
-    public MainApp(File directory)
-    {
+    public MainApp(File directory) throws IOException {
         contentPane = new JPanel(new BorderLayout());
         var mb = new JMenuBar();
         var x = new JMenu("File");
@@ -57,6 +63,7 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
 
         setContentPane(contentPane);
         setTitle("Text Editor Demo");
+        setIconImage(ImageIO.read(new File("res/graja.png")));
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
