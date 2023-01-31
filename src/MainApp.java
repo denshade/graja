@@ -41,16 +41,22 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
     public MainApp(File directory) throws IOException {
         contentPane = new JPanel(new BorderLayout());
         var mb = new JMenuBar();
-        var x = new JMenu("File");
+        var gradleMenu = new JMenu("Gradle");
+
+        var fileMenu = new JMenu("File");
         this.directory = directory;
+
+        var gradleBuild = new JMenuItem("Gradle build");
+        gradleMenu.add(gradleBuild);
 
         var m1 = new JMenuItem("Open directory");
         var m3 = new JMenuItem("Exit");
         m1.addActionListener(this);
         m3.addActionListener(this);
-        x.add(m1);
-        x.add(m3);
-        mb.add(x);
+        fileMenu.add(m1);
+        fileMenu.add(m3);
+        mb.add(fileMenu);
+        mb.add(gradleMenu);
         setJMenuBar(mb);
         javaTextEditor = new RSyntaxTextArea(20, 60);
         javaTextEditor.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
