@@ -48,6 +48,7 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
 
         var gradleBuild = new JMenuItem("Gradle build");
         gradleMenu.add(gradleBuild);
+        gradleBuild.addActionListener(this);
 
         var m1 = new JMenuItem("Open directory");
         var m3 = new JMenuItem("Exit");
@@ -83,6 +84,9 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
         }
         if("Open directory".equals(e.getActionCommand())){
             openDirectoryAction();
+        }
+        if("Gradle build".equals(e.getActionCommand())){
+            new GradleRunner().run();
         }
 
     }
