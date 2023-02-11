@@ -13,6 +13,7 @@ import java.util.Collections;
 public class EditorWithHeader extends JPanel implements FileTree.FileTreeListener
 {
     private RSyntaxTextArea javaTextEditor;
+    private JLabel fileheader;
     public EditorWithHeader()
     {
         setLayout(new BorderLayout());
@@ -20,6 +21,8 @@ public class EditorWithHeader extends JPanel implements FileTree.FileTreeListene
         javaTextEditor.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         javaTextEditor.setCodeFoldingEnabled(true);
         RTextScrollPane sp = new RTextScrollPane(javaTextEditor);
+        fileheader = new JLabel("new file");
+        add(fileheader, BorderLayout.NORTH);
         add(sp, BorderLayout.CENTER);
     }
 
@@ -31,6 +34,7 @@ public class EditorWithHeader extends JPanel implements FileTree.FileTreeListene
         {
             lines =
                     Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
+            fileheader.setText(file.getAbsolutePath());
         }
         catch (IOException e)
         {
