@@ -14,10 +14,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Collections;
 
-public class MainApp extends JFrame implements ActionListener, FileTree.FileTreeListener
+public class MainApp extends JFrame implements ActionListener
 {
 
-    private final RSyntaxTextArea javaTextEditor;
+    EditorWithHeader editor;
     private FileTree fileTree;
     private final JPanel contentPane;
     private File directory;
@@ -59,13 +59,10 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
         mb.add(fileMenu);
         mb.add(gradleMenu);
         setJMenuBar(mb);
-        javaTextEditor = new RSyntaxTextArea(20, 60);
-        javaTextEditor.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
-        javaTextEditor.setCodeFoldingEnabled(true);
-        RTextScrollPane sp = new RTextScrollPane(javaTextEditor);
-        contentPane.add(sp, BorderLayout.CENTER);
+        editor = new EditorWithHeader();
+        contentPane.add(editor, BorderLayout.CENTER);
         fileTree = new FileTree(directory);
-        fileTree.addListener(this);
+        fileTree.addListener(editor);
         contentPane.add(fileTree, BorderLayout.WEST);
 
         setContentPane(contentPane);
@@ -100,7 +97,7 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
             directory = file;
             contentPane.remove(fileTree);
             fileTree = new FileTree(directory);
-            fileTree.addListener(this);
+            fileTree.addListener(editor);
             contentPane.add(fileTree, BorderLayout.WEST);
             pack();
         }
@@ -115,20 +112,4 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
         }
     }
 
-    @Override
-    public void fileChanged(File file) {
-        if (!file.isFile()) return;
-        java.util.List<String> lines = Collections.emptyList();
-        try
-        {
-            lines =
-                    Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
-        }
-        catch (IOException e)
-        {
-            // do something
-            e.printStackTrace();
-        }
-        javaTextEditor.setText(String.join("\n", lines));
-    }
 }
