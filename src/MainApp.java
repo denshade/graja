@@ -100,6 +100,7 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
             directory = file;
             contentPane.remove(fileTree);
             fileTree = new FileTree(directory);
+            fileTree.addListener(this);
             contentPane.add(fileTree, BorderLayout.WEST);
             pack();
         }
@@ -107,7 +108,7 @@ public class MainApp extends JFrame implements ActionListener, FileTree.FileTree
 
     private void exitAction() {
         int dialogButton = JOptionPane.YES_NO_OPTION;
-        dialogButton = JOptionPane.showConfirmDialog (null, "Would You Like to Save your Previous Note First?","Warning",dialogButton);
+        dialogButton = JOptionPane.showConfirmDialog (null, "Are you sure?","Warning",dialogButton);
 
         if(dialogButton == JOptionPane.YES_OPTION){
             System.exit(0);
