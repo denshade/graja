@@ -3,6 +3,7 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -14,11 +15,12 @@ public class EditorWithHeader extends JPanel implements FileTree.FileTreeListene
     private RSyntaxTextArea javaTextEditor;
     public EditorWithHeader()
     {
+        setLayout(new BorderLayout());
         javaTextEditor = new RSyntaxTextArea(20, 60);
         javaTextEditor.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         javaTextEditor.setCodeFoldingEnabled(true);
         RTextScrollPane sp = new RTextScrollPane(javaTextEditor);
-        add(sp);
+        add(sp, BorderLayout.CENTER);
     }
 
     @Override
