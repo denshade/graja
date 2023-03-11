@@ -1,7 +1,4 @@
 import com.formdev.flatlaf.FlatLightLaf;
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
-import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
-import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,9 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.Collections;
 
 public class MainApp extends JFrame implements ActionListener
 {
