@@ -11,7 +11,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.util.Collections;
 
 public class EditorWithHeader extends JPanel implements FileTree.FileTreeListener, DocumentListener
@@ -61,7 +60,7 @@ public class EditorWithHeader extends JPanel implements FileTree.FileTreeListene
             fileWriter.close();
             fileChanged = false;
         } catch (IOException e) {
-            JOptionPane.showConfirmDialog(this, "Failed to save file "+ activeFile+ " with "+ e.getMessage());
+            JOptionPane.showConfirmDialog(this, "Failed to save file " + activeFile+ " with "+ e.getMessage());
         }
     }
 
@@ -82,6 +81,6 @@ public class EditorWithHeader extends JPanel implements FileTree.FileTreeListene
 
     private void toggleFileChanged() {
         fileChanged = true;
-        fileheader.setText(activeFile.getAbsolutePath() + " *");
+        fileheader.setText(activeFile.getAbsolutePath() + " +");
     }
 }
