@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Collections;
 
 public class DirectoryDialog extends JDialog implements ActionListener
 {
@@ -20,7 +21,8 @@ public class DirectoryDialog extends JDialog implements ActionListener
         setLocationRelativeTo(null);
         setTitle("Select a directory to open");
         contentPane = new JPanel(new BorderLayout());
-        listModel.addElement(new File("Example"));
+        var loader = new FileLoader();
+        listModel.addAll(loader.getFiles());
         historyList = new JList(listModel);
         historyList.setMinimumSize(new Dimension(300,300));
         historyList.setSize(new Dimension(300,300));
@@ -54,6 +56,8 @@ public class DirectoryDialog extends JDialog implements ActionListener
             int returnVal = fc.showOpenDialog(null);
             var dir = fc.getSelectedFile();
             listModel.addElement(dir);
+            var fileLoader = new FileLoader();
+            fileLoader.storeFiles(Collections.<File>list(listModel.elements()));
         }
         if (e.getActionCommand().equals("OK")) {
             if (!historyList.isSelectionEmpty()) {
