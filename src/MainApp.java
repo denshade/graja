@@ -20,10 +20,9 @@ public class MainApp extends JFrame implements ActionListener
     public static void main(String[] args)
     {
         FlatLightLaf.setup();
-        final JFileChooser fc = new JFileChooser();
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int returnVal = fc.showOpenDialog(null);
-        var dir = fc.getSelectedFile();
+        DirectoryDialog directoryDialog = new DirectoryDialog(null);
+        directoryDialog.setVisible(true);
+        var dir = directoryDialog.getDirectory();
         SwingUtilities.invokeLater(() -> {
             try {
                 new MainApp(dir).setVisible(true);
