@@ -37,7 +37,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -47,8 +46,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -61,7 +58,7 @@ public class FileTree extends JPanel {
 
     interface FileTreeListener
     {
-        void fileChanged(File file);
+        void loadNewFile(File file);
     }
     class ShortFile
     {
@@ -95,7 +92,7 @@ public class FileTree extends JPanel {
                     .getPath().getLastPathComponent();
             for (FileTreeListener listener : listeners)
             {
-                listener.fileChanged(((ShortFile)node.getUserObject()).getFile());
+                listener.loadNewFile(((ShortFile)node.getUserObject()).getFile());
             }
             System.out.println("You selected " + node);
         });

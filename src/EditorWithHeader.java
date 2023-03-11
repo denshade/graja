@@ -5,15 +5,18 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.Collections;
 
 public class EditorWithHeader extends JPanel implements FileTree.FileTreeListener
 {
     private RSyntaxTextArea javaTextEditor;
     private JLabel fileheader;
+    private File activeFile;
     public EditorWithHeader()
     {
         setLayout(new BorderLayout());
@@ -27,8 +30,9 @@ public class EditorWithHeader extends JPanel implements FileTree.FileTreeListene
     }
 
     @Override
-    public void fileChanged(File file) {
+    public void loadNewFile(File file) {
         if (!file.isFile()) return;
+        activeFile = file;
         java.util.List<String> lines = Collections.emptyList();
         try
         {
@@ -38,9 +42,19 @@ public class EditorWithHeader extends JPanel implements FileTree.FileTreeListene
         }
         catch (IOException e)
         {
-            // do something
+            JOptionPane.showConfirmDialog(this, "Failed to load file "+ file+ " with "+ e.getMessage());
             e.printStackTrace();
         }
         javaTextEditor.setText(String.join("\n", lines));
+    }
+
+    public void triggerSave() {
+        try {
+            FileWriter fileWriter = new FileWriter(activeFile);
+            fileWriter.write(javaTextEditor.getText());
+            fileWriter.close();
+        } catch (IOException e) {
+            JOptionPane.showConfirmDialog(this, "Failed to save file "+ activeFile+ " with "+ e.getMessage());
+        }
     }
 }

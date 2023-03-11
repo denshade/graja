@@ -91,10 +91,17 @@ public class MainApp extends JFrame implements ActionListener
         if("Open directory".equals(e.getActionCommand())){
             openDirectoryAction();
         }
+        if("Save file".equals(e.getActionCommand())){
+            saveAction();
+        }
         if("Gradle build".equals(e.getActionCommand())){
             new GradleRunner().run();
         }
 
+    }
+
+    private void saveAction() {
+        editor.triggerSave();
     }
 
     private void openDirectoryAction() {
