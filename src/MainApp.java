@@ -41,23 +41,8 @@ public class MainApp extends JFrame implements ActionListener
     public MainApp(File directory) throws IOException {
         contentPane = new JPanel(new BorderLayout());
         var mb = new JMenuBar();
-        var gradleMenu = new JMenu("Gradle");
-
-        var fileMenu = new JMenu("File");
-        this.directory = directory;
-
-        var gradleBuild = new JMenuItem("Gradle build");
-        gradleMenu.add(gradleBuild);
-        gradleBuild.addActionListener(this);
-
-        var m1 = new JMenuItem("Open directory");
-        var m3 = new JMenuItem("Exit");
-        m1.addActionListener(this);
-        m3.addActionListener(this);
-        fileMenu.add(m1);
-        fileMenu.add(m3);
-        mb.add(fileMenu);
-        mb.add(gradleMenu);
+        mb.add(createFileMenu(directory));
+        mb.add(createGradleMenu());
         setJMenuBar(mb);
         editor = new EditorWithHeader();
         contentPane.add(editor, BorderLayout.CENTER);
@@ -72,6 +57,30 @@ public class MainApp extends JFrame implements ActionListener
         pack();
         setLocationRelativeTo(null);
 
+    }
+
+    private JMenu createGradleMenu() {
+        var gradleMenu = new JMenu("Gradle");
+
+        var gradleBuild = new JMenuItem("Gradle build");
+        gradleMenu.add(gradleBuild);
+        gradleBuild.addActionListener(this);
+        return gradleMenu;
+    }
+
+    private JMenu createFileMenu(File directory) {
+        var fileMenu = new JMenu("File");
+        this.directory = directory;
+        var openDirectoryItem = new JMenuItem("Open directory");
+        var saveCurrentFile = new JMenuItem("Save file");
+        var exitMenuItem = new JMenuItem("Exit");
+        openDirectoryItem.addActionListener(this);
+        exitMenuItem.addActionListener(this);
+        saveCurrentFile.addActionListener(this);
+        fileMenu.add(openDirectoryItem);
+        fileMenu.add(saveCurrentFile);
+        fileMenu.add(exitMenuItem);
+        return fileMenu;
     }
 
     @Override
