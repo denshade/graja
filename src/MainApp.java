@@ -85,13 +85,12 @@ public class MainApp extends JFrame implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch(e.getActionCommand()) {
-            case "Exit": exitAction(); break;
-            case "Open directory": openDirectoryAction(); break;
-            case "Save file": saveAction(); break;
-            case "Gradle build": new GradleRunner().run(); break;
-            default:
-                throw new RuntimeException("Unknown option");
+        switch (e.getActionCommand()) {
+            case "Exit" -> exitAction();
+            case "Open directory" -> openDirectoryAction();
+            case "Save file" -> saveAction();
+            case "Gradle build" -> new GradleRunner().run();
+            default -> throw new RuntimeException("Unknown option");
         }
     }
 
