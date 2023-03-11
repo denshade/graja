@@ -67,18 +67,20 @@ public class EditorWithHeader extends JPanel implements FileTree.FileTreeListene
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        fileChanged = true;
-        fileheader.setText(activeFile.getAbsolutePath() + " *");
+        toggleFileChanged();
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        fileChanged = true;
-        fileheader.setText(activeFile.getAbsolutePath() + " *");
+        toggleFileChanged();
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
+        toggleFileChanged();
+    }
+
+    private void toggleFileChanged() {
         fileChanged = true;
         fileheader.setText(activeFile.getAbsolutePath() + " *");
     }
