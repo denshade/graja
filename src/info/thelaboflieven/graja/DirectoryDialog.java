@@ -1,8 +1,12 @@
+package info.thelaboflieven.graja;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 
 public class DirectoryDialog extends JDialog implements ActionListener
@@ -15,13 +19,14 @@ public class DirectoryDialog extends JDialog implements ActionListener
         return (File)historyList.getSelectedValue();
     }
 
-    DirectoryDialog(Frame parent) {
+    DirectoryDialog(Frame parent) throws IOException {
         super(parent, "Select a directory to open", Dialog.ModalityType.DOCUMENT_MODAL);
         setSize(500,500);
         setLocationRelativeTo(null);
         setTitle("Select a directory to open");
         contentPane = new JPanel(new BorderLayout());
         var loader = new FileLoader();
+        setIconImage(ImageIO.read(new File("res/graja.png")));
         listModel.addAll(loader.getFiles());
         historyList = new JList(listModel);
         historyList.setMinimumSize(new Dimension(300,300));
@@ -42,8 +47,7 @@ public class DirectoryDialog extends JDialog implements ActionListener
         pack();
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException {
         var dialog = new DirectoryDialog(null);
         dialog.show();
     }

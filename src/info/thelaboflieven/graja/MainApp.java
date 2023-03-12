@@ -1,3 +1,5 @@
+package info.thelaboflieven.graja;
+
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.imageio.ImageIO;
@@ -17,8 +19,7 @@ public class MainApp extends JFrame implements ActionListener
     private File directory;
 
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException {
         FlatLightLaf.setup();
         DirectoryDialog directoryDialog = new DirectoryDialog(null);
         directoryDialog.setVisible(true);

@@ -1,4 +1,4 @@
-/*
+package info.thelaboflieven.graja;/*
  * Copyright (c) Ian F. Darwin, http://www.darwinsys.com/, 1996-2002.
  * All rights reserved. Software written by Ian F. Darwin and others.
  * $Id: LICENSE,v 1.8 2004/02/09 03:33:38 ian Exp $
@@ -51,7 +51,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 /**
  * Display a file system in a JTree view
  *
- * @version $Id: FileTree.java,v 1.9 2004/02/23 03:39:22 ian Exp $
+ * @version $Id: info.thelaboflieven.graja.FileTree.java,v 1.9 2004/02/23 03:39:22 ian Exp $
  * @author Ian Darwin
  */
 public class FileTree extends JPanel {
@@ -79,7 +79,7 @@ public class FileTree extends JPanel {
     }
 
     private List<FileTreeListener> listeners = new ArrayList<>();
-    /** Construct a FileTree */
+    /** Construct a info.thelaboflieven.graja.FileTree */
     public FileTree(File dir) {
         setLayout(new BorderLayout());
 
@@ -137,10 +137,10 @@ public class FileTree extends JPanel {
         return new Dimension(200, 400);
     }
 
-    /** Main: make a Frame, add a FileTree */
+    /** Main: make a Frame, add a info.thelaboflieven.graja.FileTree */
     public static void main(String[] av) {
 
-        JFrame frame = new JFrame("FileTree");
+        JFrame frame = new JFrame("info.thelaboflieven.graja.FileTree");
         frame.setForeground(Color.black);
         frame.setBackground(Color.lightGray);
         Container cp = frame.getContentPane();

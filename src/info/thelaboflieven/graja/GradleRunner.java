@@ -1,3 +1,5 @@
+package info.thelaboflieven.graja;
+
 public class GradleRunner
 {
     public void run() {
