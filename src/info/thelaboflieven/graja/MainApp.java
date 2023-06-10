@@ -83,7 +83,7 @@ public class MainApp extends JFrame implements ActionListener
             case "Exit" -> exitAction();
             case "Open directory" -> openDirectoryAction();
             case "Save file" -> saveAction();
-            case "Gradle build" -> new GradleRunner().run();
+            case "Gradle build" -> new GradleRunner().run(directory);
             default -> throw new RuntimeException("Unknown option");
         }
     }
