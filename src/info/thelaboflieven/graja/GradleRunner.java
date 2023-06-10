@@ -10,7 +10,7 @@ public class GradleRunner
         ProcessBuilder processBuilder = new ProcessBuilder(gradlePath.getAbsolutePath(), "assemble");
 
         // Set the working directory if needed
-        // processBuilder.directory(new File("path/to/working/directory"));
+        processBuilder.directory(directory);
 
         // Start the process
         Process process = null;
@@ -26,9 +26,6 @@ public class GradleRunner
             copy(process.getInputStream(), baos);
             // Print the exit value
             System.out.println("Exit Value: " + exitCode + " "+ baos);
-            // Find gradle
-            // Run gradle assemble.
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
