@@ -16,6 +16,7 @@ public class GradleRunner
         Process process = null;
         try {
             process = processBuilder.start();
+            System.out.println("Starting " + gradlePath + " assemble in " + directory);
             int exitCode = process.waitFor();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             copy(process.getInputStream(), baos);

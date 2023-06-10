@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Executors;
 
 public class MainApp extends JFrame implements ActionListener
 {
@@ -83,7 +84,7 @@ public class MainApp extends JFrame implements ActionListener
             case "Exit" -> exitAction();
             case "Open directory" -> openDirectoryAction();
             case "Save file" -> saveAction();
-            case "Gradle build" -> new GradleRunner().run(directory);
+            case "Gradle build" -> Executors.newSingleThreadExecutor().execute(() -> new GradleRunner().run(directory));
             default -> throw new RuntimeException("Unknown option");
         }
     }
