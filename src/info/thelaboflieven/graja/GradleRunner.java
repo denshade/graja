@@ -16,11 +16,6 @@ public class GradleRunner
         Process process = null;
         try {
             process = processBuilder.start();
-            // You can get the process output or input stream if needed
-            // InputStream inputStream = process.getInputStream();
-            // OutputStream outputStream = process.getOutputStream();
-
-            // Wait for the process to finish and get the exit value
             int exitCode = process.waitFor();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             copy(process.getInputStream(), baos);
