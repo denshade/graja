@@ -1,7 +1,6 @@
 package info.thelaboflieven.graja;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class GradleRunner
 {
@@ -23,8 +22,10 @@ public class GradleRunner
 
             // Wait for the process to finish and get the exit value
             int exitCode = process.waitFor();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            copy(process.getInputStream(), baos);
             // Print the exit value
-            System.out.println("Exit Value: " + exitCode);
+            System.out.println("Exit Value: " + exitCode + " "+ baos);
             // Find gradle
             // Run gradle assemble.
 
@@ -35,5 +36,13 @@ public class GradleRunner
         }
 
 
+    }
+
+    void copy(InputStream source, OutputStream target) throws IOException {
+        byte[] buf = new byte[8192];
+        int length;
+        while ((length = source.read(buf)) != -1) {
+            target.write(buf, 0, length);
+        }
     }
 }
