@@ -1,9 +1,16 @@
 package info.thelaboflieven.graja;
 
+import javax.swing.*;
 import java.io.*;
 
 public class GradleRunner
 {
+    private final JTextArea textArea;
+
+    public GradleRunner(JTextArea textArea) {
+        this.textArea = textArea;
+    }
+
     public void run(File directory) {
         var finder = new GradleFinderImpl();
         var gradlePath = finder.forPath(directory);
@@ -21,6 +28,7 @@ public class GradleRunner
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             copy(process.getInputStream(), baos);
             // Print the exit value
+            textArea.setText(baos.toString());
             System.out.println("Exit Value: " + exitCode + " "+ baos);
         } catch (IOException e) {
             e.printStackTrace();

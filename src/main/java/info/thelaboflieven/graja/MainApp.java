@@ -18,6 +18,7 @@ public class MainApp extends JFrame implements ActionListener
     private FileTree fileTree;
     private final JPanel contentPane;
     private File directory;
+    private GradleRunner runner;
 
 
     public static void main(String[] args) throws IOException {
@@ -44,6 +45,9 @@ public class MainApp extends JFrame implements ActionListener
         fileTree = new FileTree(directory);
         fileTree.addListener(editor);
         contentPane.add(fileTree, BorderLayout.WEST);
+        var textArea = new JTextArea();
+        contentPane.add(textArea, BorderLayout.SOUTH);
+        runner = new GradleRunner(textArea);
 
         setContentPane(contentPane);
         setTitle("Graja");
@@ -84,7 +88,7 @@ public class MainApp extends JFrame implements ActionListener
             case "Exit" -> exitAction();
             case "Open directory" -> openDirectoryAction();
             case "Save file" -> saveAction();
-            case "Gradle build" -> Executors.newSingleThreadExecutor().execute(() -> new GradleRunner().run(directory));
+            case "Gradle build" -> Executors.newSingleThreadExecutor().execute(() -> runner.run(directory));
             default -> throw new RuntimeException("Unknown option");
         }
     }
